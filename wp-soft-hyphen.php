@@ -15,7 +15,7 @@
  * Plugin Name: WP Soft Hyphen
  * Plugin URI:  https://github.com/joostadams/wp-soft-hyphen/
  * Description: Voegt een soft hyphen (&amp;shy;) knop toe aan de Gutenberg toolbar voor controle over woordafbrekingen. Sneltoets: Ctrl/Cmd+Shift+-.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author:      Dutch Portfolio
@@ -27,7 +27,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WP_SOFT_HYPHEN_VERSION', '1.0.0' );
+define( 'WP_SOFT_HYPHEN_VERSION', '1.0.1' );
 define( 'WP_SOFT_HYPHEN_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_SOFT_HYPHEN_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -52,8 +52,11 @@ add_action( 'enqueue_block_editor_assets', 'wp_soft_hyphen_enqueue_editor_assets
  *
  * Uses YahnisElsts/plugin-update-checker to enable automatic
  * updates from GitHub releases on every environment.
+ *
+ * Loaded unconditionally (not behind is_admin()) so scheduled
+ * update checks via wp-cron also work.
  */
-if ( is_admin() && file_exists( WP_SOFT_HYPHEN_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php' ) ) {
+if ( file_exists( WP_SOFT_HYPHEN_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php' ) ) {
 	require_once WP_SOFT_HYPHEN_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php';
 
 	$wp_soft_hyphen_update_checker = YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
